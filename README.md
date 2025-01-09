@@ -1,7 +1,7 @@
 # CRUD Blog Application
 
 ## Overview
-The **CRUD Blog Application** is a RESTful API built using Spring Boot, providing functionality to create, read, update, and delete blog posts. It integrates advanced exception handling, validation, and service-layer architecture for clean and maintainable code.
+The **CRUD Blog Application** is a RESTful API built using Spring Boot, providing functionality to create, read, update, and delete blog posts. It integrates advanced exception handling, validation, and service-layer architecture for clean and maintainable code. Unit tests are included using an in-memory H2 database for efficient testing.
 
 ## Features
 
@@ -18,13 +18,15 @@ The **CRUD Blog Application** is a RESTful API built using Spring Boot, providin
   - `DuplicateItemException`: Thrown when attempting to create a blog with a duplicate title.
   - Validation exceptions for invalid input fields.
 - **Global Exception Handling**: Centralized error responses using `@ControllerAdvice`.
+- **Unit Testing**: Includes comprehensive tests with an H2 in-memory database.
 
 ## Technologies Used
 - **Spring Boot**: Core framework for application development.
 - **Spring Data JPA**: Integration with database using JPA for data persistence.
-- **PostgreSQL**: Relational database for storing blog data.
+- **H2 Database**: In-memory database for testing purposes.
 - **Jakarta Validation**: Ensures input data validity.
 - **REST API Design**: Exposes endpoints for CRUD operations.
+- **JUnit**: For writing and running unit tests.
 
 ## Project Structure
 ```
@@ -41,6 +43,8 @@ com.tawsif.CRUDBlog
 │   ├── BlogRepository.java       # JPA repository for Blog entity
 ├── blogservice
 │   ├── BlogService.java          # Business logic for blog operations
+├── tests
+│   ├── BlogServiceTest.java      # Unit tests for the service layer
 ```
 
 ## Endpoints
@@ -89,3 +93,29 @@ Centralized handling of exceptions to return consistent and meaningful error res
       "content": "Content is mandatory"
     }
     ```
+
+## Unit Testing
+
+### Testing Framework
+- **JUnit 5**: Used for writing unit tests.
+- **H2 Database**: In-memory database configured for testing without relying on a live PostgreSQL instance.
+
+### Test Configuration
+- Test properties are defined in `application-test.properties`:
+  ```properties
+  spring.datasource.url=jdbc:h2:mem:testdb
+  spring.datasource.driver-class-name=org.h2.Driver
+  spring.datasource.username=sa
+  spring.datasource.password=password
+  spring.jpa.hibernate.ddl-auto=create-drop
+  spring.jpa.show-sql=true
+  ```
+
+### Test Coverage
+- **Service Layer Tests**:
+  - Test for successful blog creation.
+  - Validate duplicate title exception.
+  - Test retrieval of blogs (all and by ID).
+  - Test deletion of blogs.
+  - Validate `NotFoundException` for non-existent blogs.
+
