@@ -25,8 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestPropertySource(locations = "classpath:application-test.properties")
 class BlogServiceTest {
 
-    @Autowired
-    private BlogRepository blogRepository;
+    @Autowired private BlogRepository blogRepository;
     private AutoCloseable autoCloseable;
 
     @Autowired
